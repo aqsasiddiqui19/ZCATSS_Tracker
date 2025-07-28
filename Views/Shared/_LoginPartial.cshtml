@@ -1,0 +1,55 @@
+﻿
+@using Microsoft.AspNetCore.Identity
+@using ZCATSS_Tracker.Models 
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@* 
+<p>IsAuthenticated: @User.Identity.IsAuthenticated</p>
+<p>User Name: @User.Identity.Name</p>
+<p>Is Admin: @User.IsInRole("Admin")</p> *@
+
+
+<ul class="navbar-nav">
+    @if (User.Identity.IsAuthenticated)
+    {
+        if (User.IsInRole("Admin"))
+        {
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Admin" asp-action="Dashboard">Admin Dashboard</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Admin" asp-action="CreateRecruiter">Create Recruiter</a>
+            </li>
+        }
+        else if (User.IsInRole("Recruiter"))
+        {
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Recruiter" asp-action="Dashboard">Recruiter Dashboard</a>
+            </li>
+        }
+
+        <li class="nav-item">
+            <form asp-controller="Auth" asp-action="Logout" method="post">
+                <button type="submit" class="nav-link btn btn-link">Logout</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Auth" asp-action="Register">Register</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Auth" asp-action="Login">Login</a>
+        </li>
+    }
+</ul>
+
+
+
+
+
+
